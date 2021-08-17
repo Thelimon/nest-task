@@ -1,28 +1,47 @@
-import { Controller, Get, Post, Put, Delete, HttpCode } from '@nestjs/common';
+/* eslint-disable prettier/prettier */
+import { Controller, Delete, Get, Post, Put, HttpStatus, Res, Query, Logger, Body } from '@nestjs/common';
+import  {Response} from 'express';
 
-@Controller('cats')
-export class CatsController {
-  @Get()
-  @HttpCode(200)
-  public get() {
-    return { name: 'GET' };
+@Controller('endpoints')
+export class EndpointsController {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor() {}
+   @Get()
+  public get(@Query() query: any, @Res() response: Response) {
+    Logger.log(query);
+    return response.status(HttpStatus.OK).send({
+      nombre: 'get',
+      query,
+    });
   }
 
   @Post()
-  @HttpCode(201)
-  public post() {
-    return { name: 'POST' };
+  public post(@Query() query: any, @Body() body: any, @Res() response: Response) {
+    Logger.log(query);
+    return response.status(HttpStatus.CREATED).send({
+      nombre: 'Post',
+      query,
+      body,
+    });
   }
 
   @Put()
-  @HttpCode(200)
-  public put() {
-    return { name: 'PUT' };
+  public put(@Query() query: any, @Body() body: any, @Res() response: Response) {
+    Logger.log(query);
+    return response.status(HttpStatus.OK).send({
+      nombre: 'Put',
+      query,
+      body,
+    });
   }
-
+  
   @Delete()
-  @HttpCode(200)
-  public delete() {
-    return { name: 'DELETE' };
+  public delete(@Query() query: any, @Res() response: Response) {
+    Logger.log(query);
+    return response.status(HttpStatus.OK).send({
+      nombre: 'Delete',
+      query,
+    });
   }
 }
+
